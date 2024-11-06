@@ -1,8 +1,13 @@
-#pragma once
+// Authentication.h
+#ifndef AUTHENTICATION_H
+#define AUTHENTICATION_H
+
 #include <string>
-using namespace std;
 
 class Authentication {
 public:
-    bool registerOrSignIn(const string& role);
+    void signIn(const std::string& username, const std::string& password);
+    void registerUser(const std::string& username, const std::string& password);
 };
+
+#endif
