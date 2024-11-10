@@ -1,7 +1,7 @@
 #include <iostream>
-#include <unordered_map>
-#include "Menu.h"
+#include <string>
 #include "Authentication.h"
+#include "Menu.h"
 
 using namespace std;
 
@@ -141,17 +141,15 @@ int main() {
 
             if (userType == 1) {  // Customer Sign In
                 if (auth.validateCustomer(username, password)) {
-                    cout << "\nCustomer login successful.\n";
                     customerMenu(menu);  // Show customer menu and process order
                 } else {
-                    cout << "\nInvalid username or password. Please try again.\n";
+                    cout << "Invalid username or password. Please try again.\n";
                 }
             } else if (userType == 2) {  // Owner Sign In
                 if (auth.validateOwner(username, password)) {
-                    cout << "\nOwner login successful.\n";
                     ownerMenu();  // Show owner menu
                 } else {
-                    cout << "\nInvalid username or password. Please try again.\n";
+                    cout << "Invalid username or password. Please try again.\n";
                 }
             }
         } else if (actionChoice == 2) {  // Register Flow
@@ -163,15 +161,15 @@ int main() {
 
             if (userType == 1) {  // Customer Register
                 if (auth.registerCustomer(username, password)) {
-                    cout << "\nCustomer registration successful. You can now sign in.\n";
+                    cout << "Customer registration successful. You can now sign in.\n";
                 } else {
-                    cout << "\nRegistration failed. Username may already exist.\n";
+                    cout << "Registration failed. Username may already exist.\n";
                 }
             } else if (userType == 2) {  // Owner Register
                 if (auth.registerOwner(username, password)) {
-                    cout << "\nOwner registration successful. You can now sign in.\n";
+                    cout << "Owner registration successful. You can now sign in.\n";
                 } else {
-                    cout << "\nRegistration failed. Username may already exist.\n";
+                    cout << "Registration failed. Username may already exist.\n";
                 }
             }
         } else {

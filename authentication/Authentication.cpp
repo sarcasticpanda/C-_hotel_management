@@ -1,51 +1,66 @@
 #include "Authentication.h"
 #include <iostream>
-#include <unordered_map>
 
-using namespace std;
-
-// Example hardcoded customer credentials
-unordered_map<string, string> customerCredentials = {
-    {"customer1", "pass123"},
-    {"customer2", "mypassword"}
-};
-
-// Example hardcoded owner credentials
-unordered_map<string, string> ownerCredentials = {
-    {"owner1", "admin123"},
-    {"owner2", "ownerpassword"}
-};
-
-// Validate customer credentials
-bool Authentication::validateCustomer(const string& username, const string& password) {
-    if (customerCredentials.find(username) != customerCredentials.end()) {
-        return customerCredentials[username] == password;
+// Registers a customer with username and password
+bool Authentication::registerCustomer(const std::string& username, const std::string& password) {
+    // Check if the username is already registered in the customerData map
+    if (customerData.find(username) != customerData.end()) {
+        std::cout << "Username already exists. Please try a different username.\n";
+        return false;  // Username already exists in the customer database
     }
-    return false;
+    
+    // If not, add the new customer to the map with the username as the key and password as the value
+    customerData[username] = password;
+    std::cout << "Customer registration successful.\n";
+    return true;
 }
 
-// Validate owner credentials
-bool Authentication::validateOwner(const string& username, const string& password) {
-    if (ownerCredentials.find(username) != ownerCredentials.end()) {
-        return ownerCredentials[username] == password;
+// Validates a customer's login by comparing the entered username and password
+bool Authentication::validateCustomer(const std::string& username, const std::string& password) {
+    // Check if the username exists in the customer database
+    if (customerData.find(username) != customerData.end()) {
+        // If username is found, compare the entered password with the stored password
+        if (customerData[username] == password) {
+            std::cout << "Customer login successful.\n";
+            return true;  // Valid login
+        } else {
+            std::cout << "Incorrect password. Please try again.\n";
+            return false;  // Password does not match
+        }
+    } else {
+        std::cout << "Username not found. Please check your username.\n";
+        return false;  // Username not found
     }
-    return false;
 }
 
-// Register customer
-bool Authentication::registerCustomer(const string& username, const string& password) {
-    if (customerCredentials.find(username) == customerCredentials.end()) {
-        customerCredentials[username] = password;
-        return true;  // Registration successful
+// Registers an owner with username and password
+bool Authentication::registerOwner(const std::string& username, const std::string& password) {
+    // Check if the username is already registered in the ownerData map
+    if (ownerData.find(username) != ownerData.end()) {
+        std::cout << "Username already exists. Please try a different username.\n";
+        return false;  // Username already exists in the owner database
     }
-    return false;  // Username already exists
+    
+    // If not, add the new owner to the map with the username as the key and password as the value
+    ownerData[username] = password;
+    std::cout << "Owner registration successful.\n";
+    return true;
 }
 
-// Register owner
-bool Authentication::registerOwner(const string& username, const string& password) {
-    if (ownerCredentials.find(username) == ownerCredentials.end()) {
-        ownerCredentials[username] = password;
-        return true;  // Registration successful
+// Validates an owner's login by comparing the entered username and password
+bool Authentication::validateOwner(const std::string& username, const std::string& password) {
+    // Check if the username exists in the owner database
+    if (ownerData.find(username) != ownerData.end()) {
+        // If username is found, compare the entered password with the stored password
+        if (ownerData[username] == password) {
+            std::cout << "Owner login successful.\n";
+            return true;  // Valid login
+        } else {
+            std::cout << "Incorrect password. Please try again.\n";
+            return false;  // Password does not match
+        }
+    } else {
+        std::cout << "Username not found. Please check your username.\n";
+        return false;  // Username not found
     }
-    return false;  // Username already exists
 }
