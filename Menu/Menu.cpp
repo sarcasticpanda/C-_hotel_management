@@ -1,13 +1,20 @@
-// Menu.cpp
 #include "Menu.h"
 #include <iostream>
 #include <unordered_map>
 using namespace std;
 
+// Display the full menu with sections
 void Menu::displayMenu() {
     cout << "\n--- Welcome to the Restaurant ---\n";
     cout << "|*------------------------MENU-------------------------*|\n";
     
+    displayStarterMenu();
+    displayMainCourseMenu();
+    displayDessertMenu();
+}
+
+// Show starter menu
+void Menu::displayStarterMenu() {
     cout << "\nStarters:\n";
     cout << "(1) Vegetable Pakora - Rs. 50\n";
     cout << "(2) Samosa - Rs. 30\n";
@@ -17,7 +24,10 @@ void Menu::displayMenu() {
     cout << "(6) Pav Bhaji - Rs. 60\n";
     cout << "(7) Chana Chaat - Rs. 35\n";
     cout << "(8) Pani Puri - Rs. 40\n";
+}
 
+// Show main course menu
+void Menu::displayMainCourseMenu() {
     cout << "\nMain Course:\n";
     cout << "(1) Chicken Biryani - Rs. 200\n";
     cout << "(2) Mutton Korma - Rs. 350\n";
@@ -27,7 +37,10 @@ void Menu::displayMenu() {
     cout << "(6) Butter Chicken - Rs. 280\n";
     cout << "(7) Chole Bhature - Rs. 150\n";
     cout << "(8) Pulao - Rs. 100\n";
+}
 
+// Show dessert menu
+void Menu::displayDessertMenu() {
     cout << "\nDesserts:\n";
     cout << "(1) Gulab Jamun - Rs. 50\n";
     cout << "(2) Ras Malai - Rs. 70\n";
@@ -39,6 +52,7 @@ void Menu::displayMenu() {
     cout << "(8) Carrot Cake - Rs. 90\n";
 }
 
+// Calculate the total bill based on the order
 void Menu::calculateBill(const unordered_map<int, int>& order) {
     int totalBill = 0;
     cout << "\n--- Your Bill ---\n";

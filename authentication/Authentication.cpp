@@ -1,17 +1,51 @@
-// Authentication.cpp
 #include "Authentication.h"
 #include <iostream>
 #include <unordered_map>
+
 using namespace std;
 
-void Authentication::signIn(const string& username, const string& password) {
-    // Implement sign-in logic here (example: simple validation)
-    cout << "Signing in with Username: " << username << " and Password: " << password << endl;
-    // Add your sign-in logic (e.g., validate against a stored database)
+// Example hardcoded customer credentials
+unordered_map<string, string> customerCredentials = {
+    {"customer1", "pass123"},
+    {"customer2", "mypassword"}
+};
+
+// Example hardcoded owner credentials
+unordered_map<string, string> ownerCredentials = {
+    {"owner1", "admin123"},
+    {"owner2", "ownerpassword"}
+};
+
+// Validate customer credentials
+bool Authentication::validateCustomer(const string& username, const string& password) {
+    if (customerCredentials.find(username) != customerCredentials.end()) {
+        return customerCredentials[username] == password;
+    }
+    return false;
 }
 
-void Authentication::registerUser(const string& username, const string& password) {
-    // Implement register logic here
-    cout << "Registering with Username: " << username << " and Password: " << password << endl;
-    // Add your registration logic (e.g., save credentials to a file)
+// Validate owner credentials
+bool Authentication::validateOwner(const string& username, const string& password) {
+    if (ownerCredentials.find(username) != ownerCredentials.end()) {
+        return ownerCredentials[username] == password;
+    }
+    return false;
+}
+
+// Register customer
+bool Authentication::registerCustomer(const string& username, const string& password) {
+    if (customerCredentials.find(username) == customerCredentials.end()) {
+        customerCredentials[username] = password;
+        return true;  // Registration successful
+    }
+    return false;  // Username already exists
+}
+
+// Register owner
+bool Authentication::registerOwner(const string& username, const string& password) {
+    if (ownerCredentials.find(username) == ownerCredentials.end()) {
+        ownerCredentials[username] = password;
+        return true;  // Registration successful
+    }
+    return false;  // Username already exists
 }
