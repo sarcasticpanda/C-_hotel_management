@@ -5,17 +5,13 @@
 
 class Menu {
 public:
-    // Display the full menu with sections
     void displayMenu();
-    
-    // Calculate the total bill based on the order
     void calculateBill(const std::unordered_map<int, int>& order);
-
-private:
-    // Display menu sections
     void displayStarterMenu();
     void displayMainCourseMenu();
     void displayDessertMenu();
+    void customerMenu();
+    bool isValidItem(char category, int item);  // Accepts category and item as arguments
 };
 
 #endif // MENU_H
