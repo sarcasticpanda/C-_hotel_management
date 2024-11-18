@@ -93,68 +93,14 @@ void Owner::editMenu() {
     } while (choice != 4);
 }
 
-// Function to get mock orders
+// Function to get mock orders (this could be replaced with actual order data)
 std::vector<std::string> Owner::getOrders() {
     std::vector<std::string> orders = {"Order1", "Order2", "Order3"}; // Mock orders
     return orders;
 }
 
-// Function to edit an order
-void Owner::editOrderMenu() {
-    int orderNumber, itemNumber, quantity;
-
-    if (orderHistory.empty()) {
-        std::cout << "No orders found to edit.\n";
-        return;
-    }
-
-    std::cout << "\n--- Order History ---\n";
-    int orderNumberIndex = 1;
-
-    for (const auto& order : orderHistory) {
-        std::cout << "Order #" << orderNumberIndex++ << "\n";
-        for (const auto& item : order) {
-            std::cout << menuItems[item.first] << "\tQuantity: " << item.second << "\tPrice: Rs. " 
-                     << menuPrices[item.first] * item.second << "\n";
-        }
-        std::cout << "-------------------------------------\n";
-    }
-
-    std::cout << "\nEnter the order number you want to edit: ";
-    std::cin >> orderNumber;
-
-    if (orderNumber > 0 && orderNumber <= orderHistory.size()) {
-        std::unordered_map<int, int>& selectedOrder = orderHistory[orderNumber - 1];
-
-        while (true) {
-            std::cout << "\nEnter item number to edit (or 0 to finish): ";
-            std::cin >> itemNumber;
-
-            if (itemNumber == 0) break;
-
-            if (selectedOrder.find(itemNumber) != selectedOrder.end()) {
-                std::cout << "Current quantity of " << menuItems[itemNumber] << ": " << selectedOrder[itemNumber] << "\n";
-                std::cout << "Enter new quantity (0 to remove item): ";
-                std::cin >> quantity;
-
-                if (quantity == 0) {
-                    selectedOrder.erase(itemNumber);
-                    std::cout << "Item removed from order.\n";
-                } else {
-                    selectedOrder[itemNumber] = quantity;
-                    std::cout << "Item quantity updated.\n";
-                }
-            } else {
-                std::cout << "Item not found in the selected order. Try again.\n";
-            }
-        }
-    } else {
-        std::cout << "Invalid order number.\n";
-    }
-}
-
-// Function to view previous orders
-void Owner::viewPreviousOrders() {
+// Function to display the order history
+void Owner::viewOrderHistory() {
     if (orderHistory.empty()) {
         std::cout << "No orders found.\n";
         return;
@@ -167,8 +113,51 @@ void Owner::viewPreviousOrders() {
         std::cout << "Order #" << orderNumber++ << "\n";
         for (const auto& item : order) {
             std::cout << menuItems[item.first] << "\tQuantity: " << item.second << "\tPrice: Rs. " 
-                     << menuPrices[item.first] * item.second << "\n";
+                 << menuPrices[item.first] * item.second << "\n";
         }
         std::cout << "-------------------------------------\n";
+    }
+}
+
+// Function to edit an order from the order history
+void Owner::editOrderMenu() {
+    int orderNumber, itemNumber, quantity;
+
+    if (orderHistory.empty()) {
+        std::cout << "No orders found to edit.\n";
+        return;
+    }
+
+    std::cout << "\n--- Edit Order ---\n";
+    int orderNumberIndex = 1;
+
+    for (const auto& order : orderHistory) {
+        std::cout << "Order #" << orderNumberIndex++ << "\n";
+        for (const auto& item : order) {
+            std::cout << menuItems[item.first] << " - Quantity: " << item.second << "\n";
+        }
+        std::cout << "------------------------------------\n";
+    }
+
+    std::cout << "Enter the order number to edit: ";
+    std::cin >> orderNumber;
+
+    if (orderNumber <= 0 || orderNumber > orderHistory.size()) {
+        std::cout << "Invalid order number.\n";
+        return;
+    }
+
+    std::cout << "Enter the item number to edit: ";
+    std::cin >> itemNumber;
+    
+    std::cout << "Enter the new quantity: ";
+    std::cin >> quantity;
+
+    // Edit the selected item in the order
+    if (orderHistory[orderNumber - 1].find(itemNumber) != orderHistory[orderNumber - 1].end()) {
+        orderHistory[orderNumber - 1][itemNumber] = quantity;
+        std::cout << "Item updated in the order.\n";
+    } else {
+        std::cout << "Item not found in this order.\n";
     }
 }
