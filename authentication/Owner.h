@@ -2,12 +2,17 @@
 #ifndef OWNER_H
 #define OWNER_H
 
-#include "User.h"
+#include <unordered_map>
+#include <string>
+#include <vector>
 
-class Owner : public User {
+class Owner {
 public:
-    Owner(const string &name, int id) : User(name, id) {}
-    string getRole() const override { return "Owner"; }
+    void addItemToMenu(int itemNumber, const std::string &itemName, int price);
+    void removeItemFromMenu(int itemNumber);
+    void editOrderMenu();  // Make sure this is declared here
+    void viewPreviousOrders();  // And this too
+    std::vector<std::string> getOrders();
 };
 
-#endif
+#endif // OWNER_H

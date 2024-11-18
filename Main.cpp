@@ -1,7 +1,11 @@
 #include <iostream>
 #include <string>
+#include <unordered_map>
 #include "Authentication.h"
 #include "Menu.h"
+#include "Owner.h"
+
+// Ensure that main.cpp knows about the Owner class and its functions
 
 using namespace std;
 
@@ -10,9 +14,10 @@ void customerMenu(Menu& menu) {
     unordered_map<int, int> order;  // Store the order in an unordered_map (item number, quantity)
     char sectionChoice;
     int itemNumber, quantity;
-    
+
     cout << "\n=====================================================\n";
-    cout << "            Welcome to the Restaurant Ordering System          \n";
+    cout << "              Welcome, Valued Customer!              \n";
+    cout << "      Thank you for choosing our restaurant!         \n";
     cout << "=====================================================\n";
     cout << "  Select a menu section:\n";
     cout << "    - Press 'S' for Starters\n";
@@ -76,32 +81,37 @@ void customerMenu(Menu& menu) {
 }
 
 // Function for owner menu
-void ownerMenu() {
-    cout << "\n=====================================================\n";
-    cout << "                Welcome, Owner!                       \n";
-    cout << "=====================================================\n";
-    cout << "  Options:\n";
-    cout << "    1. View and Edit Orders\n";
-    cout << "    2. View Restaurant Statistics\n";
-    cout << "    3. Exit\n";
-    cout << "=====================================================\n";
-    
+void ownerMainMenu() {
+    Owner owner;
     int choice;
-    cout << "Select an option: ";
-    cin >> choice;
 
-    switch (choice) {
-        case 1:
-            cout << "You can view and manage orders here.\n";
-            break;
-        case 2:
-            cout << "You can view restaurant statistics here.\n";
-            break;
-        case 3:
-            cout << "Exiting Owner menu.\n";
-            break;
-        default:
-            cout << "Invalid choice. Please try again.\n";
+    while (true) {
+        cout << "\n=====================================================\n";
+        cout << "                Welcome, Owner!\n";
+        cout << "       Manage orders and restaurant information\n";
+        cout << "=====================================================\n";
+        cout << "  Options:\n";
+        cout << "    1. View and Edit Orders\n";
+        cout << "    2. View Restaurant Statistics\n";
+        cout << "    3. Exit\n";
+        cout << "=====================================================\n";
+        cout << "Select an option: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                owner.editOrderMenu(); // You need to define or implement this function
+                break;
+            case 2:
+                owner.viewPreviousOrders(); // You need to define or implement this function
+                break;
+            case 3:
+                cout << "Exiting the Owner Menu.\n";
+                return;
+            default:
+                cout << "Invalid option. Please try again.\n";
+                break;
+        }
     }
 }
 
@@ -147,7 +157,7 @@ int main() {
                 }
             } else if (userType == 2) {  // Owner Sign In
                 if (auth.validateOwner(username, password)) {
-                    ownerMenu();  // Show owner menu
+                    ownerMainMenu();  // Show owner menu
                 } else {
                     cout << "Invalid username or password. Please try again.\n";
                 }
