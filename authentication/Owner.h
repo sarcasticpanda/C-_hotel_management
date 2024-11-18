@@ -1,4 +1,3 @@
-// Owner.h
 #ifndef OWNER_H
 #define OWNER_H
 
@@ -8,11 +7,14 @@
 
 class Owner {
 public:
+    // Function declarations
+    void viewMenu();
     void addItemToMenu(int itemNumber, const std::string &itemName, int price);
     void removeItemFromMenu(int itemNumber);
-    void editOrderMenu();  // Make sure this is declared here
-    void viewPreviousOrders();  // And this too
+    void editMenu();
     std::vector<std::string> getOrders();
+    void editOrderMenu();
+    void viewPreviousOrders();
 };
 
 #endif // OWNER_H
