@@ -110,6 +110,7 @@ void Menu::addItemToOrder(unordered_map<int, int>& order) {
 }
 
 // Calculate bill
+// Calculate bill with optional coupon code
 void Menu::calculateBill(const unordered_map<int, int>& order) {
     int total = 0;
 
@@ -131,7 +132,34 @@ void Menu::calculateBill(const unordered_map<int, int>& order) {
     }
 
     cout << "-------------------------------------\n";
-    cout << "Total Bill: Rs. " << total << endl;
+    cout << "Total before discount: Rs. " << total << endl;
+
+    // Ask if the user wants to apply a coupon
+    char applyCoupon;
+    cout << "Do you have a coupon code? (y/n): ";
+    cin >> applyCoupon;
+
+    if (applyCoupon == 'y' || applyCoupon == 'Y') {
+        string couponCode;
+        cout << "Enter coupon code: ";
+        cin >> couponCode;
+
+        // Apply discount based on coupon code
+        if (couponCode == "DIS20") {
+            total *= 0.8;  // Apply 20% discount
+            cout << "20% discount applied.\n";
+        } 
+        else if (couponCode == "DIS40") {
+            total *= 0.6;  // Apply 40% discount
+            cout << "40% discount applied.\n";
+        } 
+        else {
+            cout << "Invalid coupon code.\n";
+        }
+    }
+
+    // Final total after discount (or without discount if no code or invalid code)
+    cout << "Final Bill: Rs. " << total << endl;
 }
 
 // Save order history
