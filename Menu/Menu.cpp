@@ -6,12 +6,14 @@
 
 using namespace std;
 
-// Global maps for menu items and prices
+// Prices for all menu items (stored with item number as the key)
 unordered_map<int, int> menuPrices = {
     {1, 50}, {2, 30}, {3, 120}, {4, 40}, {5, 25}, {6, 60}, {7, 35}, {8, 40},
     {9, 200}, {10, 350}, {11, 180}, {12, 120}, {13, 30}, {14, 280}, {15, 150}, {16, 100},
     {17, 50}, {18, 70}, {19, 40}, {20, 60}, {21, 80}, {22, 50}, {23, 40}, {24, 90}
 };
+
+// Names for all menu items (linked to item numbers)
 unordered_map<int, string> menuItems = {
     {1, "Vegetable Pakora"}, {2, "Samosa"}, {3, "Paneer Tikka"}, {4, "Dhokla"},
     {5, "Aloo Tikki"}, {6, "Pav Bhaji"}, {7, "Chana Chaat"}, {8, "Pani Puri"},
@@ -22,10 +24,9 @@ unordered_map<int, string> menuItems = {
     {23, "Ice Cream"}, {24, "Carrot Cake"}
 };
 
-// Vector to store order history
+// Keeps track of all orders placed by customers
 vector<unordered_map<int, int>> orderHistory;
 
-// Menu displays
 void Menu::displayMenu() {
     cout << "\n--- Welcome to the Restaurant ---\n";
     cout << "|*------------------------MENU-------------------------*|\n";
@@ -61,7 +62,6 @@ void Menu::displayDessertMenu() {
     }
 }
 
-// Customer menu
 void Menu::customerMenu() {
     int choice;
     unordered_map<int, int> order;
@@ -90,7 +90,6 @@ void Menu::customerMenu() {
     }
 }
 
-// Add items to order
 void Menu::addItemToOrder(unordered_map<int, int>& order) {
     int itemNumber, quantity;
     while (true) {
@@ -109,8 +108,6 @@ void Menu::addItemToOrder(unordered_map<int, int>& order) {
     }
 }
 
-// Calculate bill
-// Calculate bill with optional coupon code
 void Menu::calculateBill(const unordered_map<int, int>& order) {
     int total = 0;
 
@@ -134,7 +131,6 @@ void Menu::calculateBill(const unordered_map<int, int>& order) {
     cout << "-------------------------------------\n";
     cout << "Total before discount: Rs. " << total << endl;
 
-    // Ask if the user wants to apply a coupon
     char applyCoupon;
     cout << "Do you have a coupon code? (y/n): ";
     cin >> applyCoupon;
@@ -144,31 +140,25 @@ void Menu::calculateBill(const unordered_map<int, int>& order) {
         cout << "Enter coupon code: ";
         cin >> couponCode;
 
-        // Apply discount based on coupon code
         if (couponCode == "DIS20") {
-            total *= 0.8;  // Apply 20% discount
+            total *= 0.8; 
             cout << "20% discount applied.\n";
-        } 
-        else if (couponCode == "DIS40") {
-            total *= 0.6;  // Apply 40% discount
+        } else if (couponCode == "DIS40") {
+            total *= 0.6; 
             cout << "40% discount applied.\n";
-        } 
-        else {
+        } else {
             cout << "Invalid coupon code.\n";
         }
     }
 
-    // Final total after discount (or without discount if no code or invalid code)
     cout << "Final Bill: Rs. " << total << endl;
 }
 
-// Save order history
 void Menu::saveOrderHistory(const unordered_map<int, int>& order) {
     orderHistory.push_back(order);
     cout << "Order saved to history.\n";
 }
 
-// Display order history for owner
 void Menu::displayOrderHistory() {
     if (orderHistory.empty()) {
         cout << "No orders found in history.\n";
@@ -188,7 +178,6 @@ void Menu::displayOrderHistory() {
     }
 }
 
-// Edit order
 void Menu::editOrder(unordered_map<int, int>& order) {
     int itemNumber, quantity;
     cout << "\n--- Edit Order ---\n";
@@ -214,32 +203,5 @@ void Menu::editOrder(unordered_map<int, int>& order) {
             cout << "Item not found in your order. Try again.\n";
         }
         cout << "Enter the next item number to edit (or 0 to finish): ";
-    }
-}
-
-// Functions to add, update, and remove items in the menu (Owner specific)
-void Menu::addItem(int itemNumber, const string& itemName, int itemPrice) {
-    menuItems[itemNumber] = itemName;
-    menuPrices[itemNumber] = itemPrice;
-    cout << "Item added successfully.\n";
-}
-
-void Menu::updateItem(int itemNumber, const string& newItemName, int newItemPrice) {
-    if (menuItems.find(itemNumber) != menuItems.end()) {
-        menuItems[itemNumber] = newItemName;
-        menuPrices[itemNumber] = newItemPrice;
-        cout << "Item updated successfully.\n";
-    } else {
-        cout << "Item number not found.\n";
-    }
-}
-
-void Menu::removeItem(int itemNumber) {
-    if (menuItems.find(itemNumber) != menuItems.end()) {
-        menuItems.erase(itemNumber);
-        menuPrices.erase(itemNumber);
-        cout << "Item removed successfully.\n";
-    } else {
-        cout << "Item number not found.\n";
     }
 }
